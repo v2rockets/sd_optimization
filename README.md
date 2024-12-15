@@ -18,9 +18,17 @@ Key parameters:
 - N: Number of tokens speculated in each cycle
 - P: Probability of a speculated token being accepted
 
+### Rejection Sampling in Speculative Decoding
+
+Speculative decoding uses rejection sampling to maintain output quality while achieving speedup. For each speculated token, the acceptance probability is:
+
+<img src="https://latex.codecogs.com/svg.latex?P%20=%20\min(1,%20\frac{q_i(j)}{p_i(j)})" />
+
+Where q_i(j) is the main model's probability and p_i(j) is the draft model's probability for token j at position i. This ensures the final output maintains the main model's distribution quality.
+
 ## Probabilistic Model for Token Acceptance
 
-We model the expected number of additional tokens that can be successfully speculated after k tokens have already been accepted.
+We model the expected number of additional tokens that can be successfully speculated after k tokens have already been accepted, based on the overall acceptance probability P.
 
 ### Recursive Formulation
 
@@ -37,6 +45,8 @@ Let E_k be the expected number of additional tokens that can be successfully spe
 The closed-form solution for E_0 (expected additional tokens from the start):
 
 <img src="https://latex.codecogs.com/svg.latex?E_0%20=%20P%20\frac{1-P^N}{1-P}" />
+
+This formula provides the expected number of additional tokens that can be successfully speculated when attempting to speculate N tokens ahead, given an overall acceptance probability P.
 
 ## Speed Formula Derivation
 
