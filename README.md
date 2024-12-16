@@ -22,7 +22,7 @@ Key parameters:
 
 Speculative decoding uses rejection sampling to maintain output quality while achieving speedup. For each speculated token, the acceptance probability is:
 
-<img src="https://latex.codecogs.com/svg.latex?P%20=%20\min(1,%20\frac{q_i(j)}{p_i(j)})" />
+$$P = \min(1, \frac{q_i(j)}{p_i(j)})$$
 
 Where q_i(j) is the main model's probability and p_i(j) is the draft model's probability for token j at position i. This ensures the final output maintains the main model's distribution quality.
 
@@ -34,17 +34,17 @@ We model the expected number of additional tokens that can be successfully specu
 
 Let E_k be the expected number of additional tokens that can be successfully speculated after k tokens have already been accepted.
 
-**Base Case**: E_N = 0 (no more tokens can be speculated beyond N)
+**Base Case**: $$ E_N = 0 $$ (no more tokens can be speculated beyond N)
 
 **Recursive Relation**: For 0 ≤ k < N:
 
-<img src="https://latex.codecogs.com/svg.latex?E_k%20=%20P(1%20+%20E_{k+1})" />
+$$E_k = P(1 + E_{k+1})$$
 
 ### Solution
 
 The closed-form solution for E_0 (expected additional tokens from the start):
 
-<img src="https://latex.codecogs.com/svg.latex?E_0%20=%20P%20\frac{1-P^N}{1-P}" />
+$$E_0 = P \frac{1-P^N}{1-P}$$
 
 This formula provides the expected number of additional tokens that can be successfully speculated when attempting to speculate N tokens ahead, given an overall acceptance probability P.
 
@@ -59,17 +59,17 @@ This formula provides the expected number of additional tokens that can be succe
 
 For each speculation cycle:
 
-<img src="https://latex.codecogs.com/svg.latex?T_{total}%20=%20T_s%20\cdot%20N%20+%20T_v" />
+$$T_{total} = T_s \cdot N + T_v$$
 
 ### Expected Tokens per Cycle
 
 The expected number of tokens per cycle is E_0 + 1, which simplifies to:
 
-<img src="https://latex.codecogs.com/svg.latex?E_{tokens}%20=%20\frac{1-P^{N+1}}{1-P}" />
+$$E_{tokens} = \frac{1-P^{N+1}}{1-P}$$
 
 ### Generation Speed
 
-<img src="https://latex.codecogs.com/svg.latex?\text{Generation%20Speed}%20=%20\frac{1%20-%20P^{N+1}}{(T_s%20\cdot%20N%20+%20T_v)%20\cdot%20(1-P)}" />
+$$\text{Generation Speed} = \frac{1 - P^{N+1}}{(T_s \cdot N + T_v) \cdot (1-P)}$$
 
 This formula represents the number of tokens generated per unit time, providing a direct measure of the system's throughput.
 
