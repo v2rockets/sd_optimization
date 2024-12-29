@@ -81,8 +81,7 @@ This formula represents the number of tokens generated per unit time, providing 
 
 Speculative decoding significantly speeds up token generation in LLMs through parallel processing. Key optimization insights include:
 
-- Maximizing acceptance probability (P)
-- Optimizing the number of speculated tokens (N)
-- Balancing speculative time (T_s) and verification time (T_v)
+- The draft model should find a balance between model size (Ts) and acceptance probability (P) to get high speed ups
+- Optimal number of speculated tokens (N) stays small unless your draft model have both very high acceptance rate and very fast generation
 
-These factors collectively determine the efficiency and performance of the speculative decoding process.
+![](https://preview.redd.it/this-is-how-speculative-decoding-speeds-the-model-up-v0-prpbobebf07e1.png?width=1536&format=png&auto=webp&s=5ae0a47ebe93cfcb1f687d24bba65cfce706a660)
