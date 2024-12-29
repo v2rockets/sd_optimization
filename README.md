@@ -35,7 +35,9 @@ We model the expected number of additional tokens that can be successfully specu
 Let E_k be the expected number of additional tokens that can be successfully speculated after k tokens have already been accepted.
 
 **Base Case**: 
-$$ E_N = 0 $$ 
+
+$$ E_N = 0 $$
+
 (no more tokens can be speculated beyond N)
 
 **Recursive Relation**: For 0 ≤ k < N:
